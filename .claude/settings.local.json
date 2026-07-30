@@ -1,0 +1,13 @@
+{
+  "permissions": {
+    "allow": [
+      "PowerShell($src = \"C:\\\\Users\\\\user\\\\Desktop\\\\십채\"; if \\(-not \\(Test-Path $src\\)\\) { \"NOT FOUND: $src\" } else { Get-ChildItem -Path $src -Recurse -File | Select-Object @{n='Rel';e={$_.FullName.Replace\\($src,''\\)}}, Extension, @{n='KB';e={[math]::Round\\($_.Length/1KB,1\\)}} | Sort-Object Rel | Format-Table -AutoSize })",
+      "Read(//c/Users/user/.vscode/extensions/pablodelucca.pixel-agents-1.3.0/**)",
+      "Bash(python -c ' *)",
+      "WebSearch",
+      "Bash(python \"C:/Users/user/AppData/Local/Temp/claude/c--Users-user-Desktop-----/d7a5b339-608b-483e-b0d4-02d42c82d9e6/scratchpad/graph_check.py\")",
+      "Bash(python graph_check.py)",
+      "mcp__claude_ai__models_explore"
+    ]
+  }
+}
