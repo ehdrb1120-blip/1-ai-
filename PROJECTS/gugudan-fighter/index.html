@@ -1,0 +1,515 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+    <title>🐰 초등 구구단 격파왕 | 모찌 토토의 팡팡 배틀 | @cheer.papa</title>
+    <!-- Google Fonts -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Black+Han+Sans&family=Jua&family=Gamja+Flower&family=Pretendard:wght@600;800;900&display=swap" rel="stylesheet">
+    <!-- FontAwesome Icons -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <!-- Canvas Confetti -->
+    <script src="https://cdn.jsdelivr.net/npm/canvas-confetti@1.6.0/dist/confetti.browser.min.js"></script>
+    <link rel="manifest" href="manifest.json">
+    <meta name="theme-color" content="#f472b6">
+    <link rel="stylesheet" href="style.css?v=12.0">
+</head>
+<body class="arcade-theme">
+
+    <!-- 배경에 둥둥 떠다니는 귀여운 구름, 별, 코인 장식 -->
+    <div class="bg-decorations" aria-hidden="true">
+        <div class="floating-item cloud-1">☁️</div>
+        <div class="floating-item cloud-2">☁️</div>
+        <div class="floating-item star-1">⭐</div>
+        <div class="floating-item star-2">✨</div>
+        <div class="floating-item coin-1">🪙</div>
+        <div class="floating-item paw-1">🎀</div>
+    </div>
+
+    <!-- 상단 부드러운 화이트 글래스 헤더 바 -->
+    <header class="game-header">
+        <div class="header-left">
+            <button id="btnHome" class="header-btn" title="처음으로"><i class="fa-solid fa-house"></i></button>
+            <div class="user-brand">
+                <span class="brand-tag">@cheer.papa</span>
+                <span class="brand-title">구구단 격파왕 🐰✨</span>
+            </div>
+        </div>
+        <div class="header-status">
+            <div class="stat-pill coin-pill">
+                <span class="pill-icon">🪙</span>
+                <span id="headerCoins" class="pill-val">0</span>
+            </div>
+            <div class="stat-pill star-pill">
+                <span class="pill-icon">⭐</span>
+                <span id="headerStars" class="pill-val">0</span>
+            </div>
+            <button id="btnAudioToggle" class="header-btn" title="음향 온/오프"><i class="fa-solid fa-volume-high"></i></button>
+            <button id="btnCertModal" class="header-btn cert-badge-btn" title="격파왕 인증서"><i class="fa-solid fa-award"></i></button>
+        </div>
+    </header>
+
+    <!-- 메인 컨테이너 -->
+    <main class="game-container">
+
+        <!-- 1. 메인 웰컴 홈 화면 (아이패드 한 화면에 쏙 들어오는 반응형 디자인) -->
+        <section id="viewHome" class="screen-view active">
+            <div class="home-hero-card">
+                <div class="home-layout-row">
+                    
+                    <!-- 좌측 (태블릿 가로) / 상단 (모바일): 모찌 토토 쇼케이스 -->
+                    <div class="hero-character-showcase">
+                        <div class="character-cloud-stage" onclick="App.pokeMascot()">
+                            <div class="cloud-glow-aura"></div>
+                            <div class="ambient-stars-fx">
+                                <span class="sparkle s1">⭐</span>
+                                <span class="sparkle s2">✨</span>
+                                <span class="sparkle s3">💖</span>
+                                <span class="sparkle s4">🍓</span>
+                            </div>
+                            <img id="mainMascotImg" src="mascot_hero.jpg?v=7.0" alt="모찌 토토 격파왕" class="hero-character-img pulse-anim">
+                            <div class="cloud-cushion-pedestal">
+                                <span class="pedestal-cloud left">☁️</span>
+                                <span class="pedestal-pill">🐰 퐁퐁 구름 위 토토 🥊</span>
+                                <span class="pedestal-cloud right">☁️</span>
+                            </div>
+                            <span class="pet-me-badge">토토를 콕! 🐰💕</span>
+                        </div>
+                        <div id="heroSpeechBubble" class="hero-talk-bubble">
+                            "안녕! 나 귀염둥이 모찌 토토야! <br>솜사탕 펀치로 구구단 깨러 가자! 얍! 🥊✨"
+                        </div>
+                    </div>
+
+                    <!-- 우측 (태블릿 가로) / 하단 (모바일): 타이틀 및 3대 모드 & 배너 -->
+                    <div class="hero-content-col">
+                        <div class="hero-title-group">
+                            <div class="neon-sub">💖 달콤하고 신나는 초등 구구단 배틀 🍓</div>
+                            <h1 class="main-title">초등 <span>구구단</span> 격파왕</h1>
+                            <p class="main-subtext">토토와 함께 펀치를 날리며 저절로 외워지는 마법 배틀!</p>
+                        </div>
+
+                        <!-- 3대 핵심 모드 선택 버튼 -->
+                        <div class="mode-select-grid">
+                            <div class="mode-btn-card card-battle" onclick="App.startStageSelect()">
+                                <div class="mode-card-icon-box">
+                                    <span class="mode-card-icon">🥊</span>
+                                    <span class="mini-tag">토토 도장 🐰</span>
+                                </div>
+                                <div class="mode-card-text">
+                                    <h3>도장 깨기 배틀</h3>
+                                    <p>2단 슬라임부터 9단 슈크림 드래곤까지 격파!</p>
+                                </div>
+                                <span class="mode-card-badge">인기 최고 🔥</span>
+                            </div>
+
+                            <div class="mode-btn-card card-survival" onclick="App.startSurvivalMode()">
+                                <div class="mode-card-icon-box">
+                                    <span class="mode-card-icon">⚡</span>
+                                    <span class="mini-tag">번개 썬더 ⚡</span>
+                                </div>
+                                <div class="mode-card-text">
+                                    <h3>60초 스피드 서바이벌</h3>
+                                    <p>릴스 타임어택! 쏟아지는 몬스터 연속 격파</p>
+                                </div>
+                                <span class="mode-card-badge red">도전! ⏱️</span>
+                            </div>
+
+                            <div class="mode-btn-card card-training" onclick="App.startTrainingMode()">
+                                <div class="mode-card-icon-box">
+                                    <span class="mode-card-icon">💡</span>
+                                    <span class="mini-tag">박사 곰곰이 🐻</span>
+                                </div>
+                                <div class="mode-card-text">
+                                    <h3>구구단 원리 수련장</h3>
+                                    <p>알록달록 묶음셈 도트 원리 & 신나는 리듬 낭독</p>
+                                </div>
+                                <span class="mode-card-badge blue">원리 쏙쏙 🎓</span>
+                            </div>
+                        </div>
+
+                        <!-- 하단 인증서 바로가기 배너 -->
+                        <div class="cert-promo-banner" onclick="App.openCertModal()">
+                            <span class="cert-icon">📜</span>
+                            <div class="cert-promo-info">
+                                <strong>전국 초등 구구단 격파왕 공인 인증서</strong>
+                                <p>모든 스테이지를 정복하고 토토의 황금 상장을 발급받아 보세요!</p>
+                            </div>
+                            <i class="fa-solid fa-chevron-right arrow-icon"></i>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- 2. 스테이지 선택 화면 (도장 깨기 맵) -->
+        <section id="viewStageSelect" class="screen-view">
+            <div class="screen-header">
+                <button class="back-pill" onclick="App.showScreen('viewHome')"><i class="fa-solid fa-arrow-left"></i> 뒤로가기</button>
+                <h2>🗺️ 토토의 구구단 도장 맵</h2>
+                <div class="stage-info-pill">도전할 도장 몬스터를 골라보세요! 🐾</div>
+            </div>
+
+            <!-- 토토 코치 친절 안내 배너 (앱 전체에 녹아든 토토) -->
+            <div class="toto-guide-card">
+                <img src="mascot_hero.jpg?v=7.0" class="toto-guide-mini-avatar" alt="모찌 토토 코치">
+                <div class="toto-guide-bubble">
+                    <strong>🐰 모찌 토토 코치의 응원:</strong>
+                    <p>"원하는 도장을 골라봐! 2단 슬라임부터 9단 슈크림 드래곤까지 하나씩 깨보자! 🥊✨"</p>
+                </div>
+            </div>
+
+            <div class="stage-grid" id="stageGrid">
+                <!-- 자바스크립트로 2단 ~ 9단 + 19단 카드 렌더링 -->
+            </div>
+        </section>
+
+        <!-- 3. 전투 배틀 화면 (포켓몬고 스타일 3D 초원 & 실시간 AR 카메라 인카운터) -->
+        <section id="viewBattle" class="screen-view">
+            <!-- 배틀 상단 상태 바 (도장선택 뒤로가기 + AR 토글 버튼) -->
+            <div class="battle-top-bar">
+                <button id="btnBattleBack" class="battle-back-pill" onclick="App.exitBattle()" title="도장 목록으로 돌아가기">
+                    <i class="fa-solid fa-arrow-left"></i> <span>도장선택</span>
+                </button>
+                <div class="battle-title-info">
+                    <span id="battleModeBadge" class="battle-badge">도장 깨기</span>
+                    <h3 id="battleStageTitle">2단 젤리 슬라임 도장</h3>
+                </div>
+                <div class="battle-top-right-tools">
+                    <!-- 포켓몬고 스타일 실시간 AR 카메라 토글 스위치 -->
+                    <button id="btnToggleAR" class="ar-toggle-pill" onclick="App.toggleAR()" title="실시간 AR 증강현실 카메라 전환">
+                        <span class="ar-dot"></span>
+                        <i class="fa-solid fa-camera"></i>
+                        <span id="arBtnText">AR 모드</span>
+                    </button>
+                    <!-- 서바이벌 타이머 -->
+                    <div id="survivalTimerBox" class="survival-timer-box" style="display:none;">
+                        <i class="fa-regular fa-clock"></i>
+                        <span id="survivalTimerSec">60</span>s
+                    </div>
+                    <div class="battle-score-box">
+                        <span>SCORE</span>
+                        <strong id="battleScore">0</strong>
+                    </div>
+                </div>
+            </div>
+
+            <!-- 포켓몬 스타일 대각선 대결 아레나 & 실시간 AR 뷰포트 -->
+            <div class="battle-arena pokemon-theme" id="battleArena">
+                <!-- 실시간 후면 카메라 비디오 피드 (AR 모드 활성화 시 표시) -->
+                <video id="arVideoFeed" class="ar-camera-feed" autoplay playsinline muted></video>
+                <div class="ar-overlay-grid" id="arGridFx"></div>
+
+                <!-- 3D 초원 자연 필드 환경 (AR OFF 기본 모드) -->
+                <div class="pogo-meadow-bg" id="pogoMeadowBg">
+                    <div class="meadow-sky">
+                        <div class="sun-flare"></div>
+                        <div class="distant-hills"></div>
+                        <div class="distant-trees"></div>
+                    </div>
+                    <div class="meadow-ground-plane"></div>
+                </div>
+
+                <!-- 피버 이펙트 오버레이 -->
+                <div id="feverOverlay" class="fever-overlay">🔥 FEVER TIME! 2배 크리티컬! 🔥</div>
+
+                <!-- [1. 좌측 상단] 상대 몬스터 정보 HUD (포켓몬 배틀 스타일) -->
+                <div class="pokemon-hud opponent-hud">
+                    <div class="hud-title-row">
+                        <span id="monsterName" class="pokemon-name">말랑 젤리 슬라임</span>
+                        <div class="pokemon-badge-row">
+                            <span class="gender-symbol-fem">♀</span>
+                            <span id="monsterLevel" class="pokemon-lvl">Lv.2</span>
+                        </div>
+                    </div>
+                    <div class="pokemon-hp-box">
+                        <span class="hp-badge-lbl">HP</span>
+                        <div class="pokemon-hp-track">
+                            <div id="monsterHpBar" class="pokemon-hp-fill" style="width: 100%;"></div>
+                        </div>
+                    </div>
+                    <div class="pokemon-hp-text-row">
+                        <span>HP</span>
+                        <span class="hp-val-wrap"><strong id="monsterHpText">100</strong> / <span id="monsterMaxHpText">100</span></span>
+                    </div>
+                </div>
+
+                <!-- [2. 우측 상단] 상대 몬스터 필드 존 (전혀 가려지지 않는 완벽한 시야 확보) -->
+                <div class="pokemon-monster-zone" id="monsterZone">
+                    <!-- 포켓몬식 잔디 베이스 & 그림자 -->
+                    <div class="pokemon-pedestal opponent-pedestal">
+                        <div class="pedestal-grass-ring"></div>
+                        <div class="pogo-ground-shadow"></div>
+                    </div>
+
+                    <!-- 포켓몬고 시그니처 펄스 타겟 링 (정답 시 축소 스트라이크) -->
+                    <div class="pogo-target-ring-outer" id="pogoTargetRing">
+                        <div class="pogo-target-ring-inner"></div>
+                    </div>
+
+                    <!-- 몬스터 그래픽 본체 (슬라임 / 보스 드래곤 등) -->
+                    <div class="monster-visual-wrapper" id="monsterVisualWrapper">
+                        <div class="monster-stage-stand">
+                            <div id="monsterGraphic" class="monster-graphic">🟢</div>
+                        </div>
+                        <!-- 피격 대미지 플로팅 텍스트 컨테이너 -->
+                        <div id="damageFxContainer" class="damage-fx-container"></div>
+                    </div>
+                </div>
+
+                <!-- [3. 좌측 하단] 아군 플레이어 모찌 토토 구역 (우상단 적을 바라보는 펀치 대기 모션) -->
+                <div class="pokemon-player-zone">
+                    <!-- 토토 배틀 발판 & 펀치 아우라 -->
+                    <div class="pokemon-pedestal player-pedestal">
+                        <div class="pedestal-grass-ring"></div>
+                        <div class="hero-punch-aura"></div>
+                    </div>
+
+                    <div class="pokemon-hero-stand" id="playerHeroBox">
+                        <img src="mascot_hero.jpg?v=7.0" alt="챔피언 모찌 토토" class="hero-battle-art">
+                        <div class="hero-name-tag">챔피언 모찌 토토 🐰🥊</div>
+                    </div>
+                </div>
+
+                <!-- [4. 우측 하단] 플레이어 상태 HUD & 콤보 박스 -->
+                <div class="pokemon-hud player-hud">
+                    <div class="hud-title-row">
+                        <span class="pokemon-name">모찌 토토</span>
+                        <div class="pokemon-badge-row">
+                            <span class="gender-symbol-male">♂</span>
+                            <span class="pokemon-lvl">Lv.5</span>
+                        </div>
+                    </div>
+                    <div class="player-cheer-box">
+                        <span id="cheerText" class="cheer-text">"토토 펀치 준비 완료! 👏"</span>
+                    </div>
+                    <!-- 콤보 발생 시 우하단에서 화려하게 터지는 콤보 박스 (몬스터 가림 0%) -->
+                    <div class="combo-counter-box" id="comboCounterBox">
+                        <span id="comboCount" class="combo-num">0</span>
+                        <span class="combo-label">COMBO!</span>
+                    </div>
+                </div>
+
+                <!-- [5. 슬림 퀵 액션 버튼 (좌측 사이드)] -->
+                <div class="pokemon-side-actions">
+                    <button class="side-action-pill btn-quick-hint" onclick="App.playVoiceHint()" title="구구단 힌트">
+                        <span>💡</span><span class="lbl">힌트</span>
+                    </button>
+                    <button class="side-action-pill btn-quick-flee" onclick="App.exitBattle()" title="도장 목록으로 돌아가기">
+                        <span>🏃</span><span class="lbl">도망</span>
+                    </button>
+                </div>
+            </div>
+
+            <!-- 구구단 문제 박스 -->
+            <div class="quiz-question-box" id="quizQuestionBox">
+                <div class="quiz-formula">
+                    <span id="quizNumA" class="quiz-num">2</span>
+                    <span class="quiz-op">×</span>
+                    <span id="quizNumB" class="quiz-num">3</span>
+                    <span class="quiz-eq">=</span>
+                    <span id="quizAnsBlank" class="quiz-blank">?</span>
+                </div>
+                <div class="quiz-hint-btn-box">
+                    <button id="btnVoiceRead" class="btn-voice-read" title="발음 듣기"><i class="fa-solid fa-volume-high"></i> 리듬 듣기</button>
+                    <button id="btnToggleKeypad" class="btn-toggle-input"><i class="fa-solid fa-keyboard"></i> 키패드 전환</button>
+                </div>
+            </div>
+
+            <!-- 답안 입력 영역 (1. 4지선다 모드 / 2. 가상 키패드 모드) -->
+            <div class="answer-zone">
+                <!-- 4지선다 객관식 버튼 그리드 (귀여운 과일/보석 심볼 배지) -->
+                <div class="choice-buttons-grid" id="choiceButtonsGrid">
+                    <!-- 자바스크립트로 4개 버튼 동적 생성 -->
+                </div>
+
+                <!-- 가상 넘버패드 (토글 가능) -->
+                <div class="virtual-keypad" id="virtualKeypad" style="display:none;">
+                    <div class="keypad-input-display">
+                        <span id="keypadValue"></span>
+                        <span class="cursor">_</span>
+                    </div>
+                    <div class="keypad-grid">
+                        <button class="key-btn" onclick="App.pressKey('1')">1</button>
+                        <button class="key-btn" onclick="App.pressKey('2')">2</button>
+                        <button class="key-btn" onclick="App.pressKey('3')">3</button>
+                        <button class="key-btn" onclick="App.pressKey('4')">4</button>
+                        <button class="key-btn" onclick="App.pressKey('5')">5</button>
+                        <button class="key-btn" onclick="App.pressKey('6')">6</button>
+                        <button class="key-btn" onclick="App.pressKey('7')">7</button>
+                        <button class="key-btn" onclick="App.pressKey('8')">8</button>
+                        <button class="key-btn" onclick="App.pressKey('9')">9</button>
+                        <button class="key-btn key-clear" onclick="App.clearKey()">C</button>
+                        <button class="key-btn" onclick="App.pressKey('0')">0</button>
+                        <button class="key-btn key-enter" onclick="App.submitKeypad()">펀치! 🥊</button>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- 4. 구구단 원리 수련장 화면 -->
+        <section id="viewTraining" class="screen-view">
+            <div class="screen-header">
+                <button class="back-pill" onclick="App.showScreen('viewHome')"><i class="fa-solid fa-arrow-left"></i> 처음으로</button>
+                <h2>💡 구구단 원리 수련장</h2>
+                <div class="stage-info-pill">묶음셈 원리를 눈으로 보며 완벽 이해! 🍎</div>
+            </div>
+
+            <div class="training-tab-scroll" id="trainingDanTabs">
+                <!-- 2단부터 9단, 19단 탭 버튼들 동적 생성 -->
+            </div>
+
+            <div class="training-content-card">
+                <div class="training-top-controls">
+                    <h3 id="trainingTitle">2단 탐구하기</h3>
+                    <div class="training-multiplier-buttons" id="multiplierBtns">
+                        <!-- ×1 ~ ×9 선택 버튼 -->
+                    </div>
+                </div>
+
+                <div class="training-visual-area">
+                    <div class="training-formula-banner">
+                        <span id="trainA">2</span> × <span id="trainB">4</span> = <strong id="trainResult">8</strong>
+                        <button id="btnTrainVoice" class="voice-bubble-btn"><i class="fa-solid fa-volume-high"></i> 발음 듣기</button>
+                    </div>
+
+                    <div class="training-explanation-box">
+                        <img src="mascot_hero.jpg?v=7.0" class="toto-guide-mini-avatar" alt="토토 코치">
+                        <p id="trainExplanation">"2개씩 4묶음이 모여서 모두 8개가 되었어요!"</p>
+                    </div>
+
+                    <!-- 도트 묶음 시각화 그리드 -->
+                    <div class="dots-container" id="dotsContainer">
+                        <!-- 묶음 그리드가 자바스크립트로 렌더링 -->
+                    </div>
+                </div>
+            </div>
+        </section>
+
+    </main>
+
+    <!-- 스테이지 클리어 승리 모달 -->
+    <div id="modalVictory" class="game-modal">
+        <div class="modal-card victory-card">
+            <div class="modal-badge">🎉 STAGE CLEAR!</div>
+            <div class="modal-illustration">
+                <img src="mascot_hero.jpg?v=7.0" alt="승리 토토" class="modal-mascot-art bounce-anim">
+            </div>
+            <h2 id="victoryTitle">2단 젤리 슬라임 격파 성공!</h2>
+            <p id="victoryDesc">정확하고 빠른 펀치로 몬스터를 완전히 물리쳤습니다!</p>
+            
+            <div class="reward-pill-row">
+                <div class="reward-pill">🪙 +<span id="winCoins">50</span> 코인</div>
+                <div class="reward-pill">⭐ +<span id="winStars">1</span> 도장 별</div>
+                <div class="reward-pill">🔥 콤보: <span id="winMaxCombo">5</span>회</div>
+            </div>
+
+            <div class="modal-actions">
+                <button class="modal-btn btn-map" onclick="App.exitBattle()"><i class="fa-solid fa-map"></i> 도장 맵</button>
+                <button class="modal-btn btn-retry" onclick="App.retryStage()"><i class="fa-solid fa-rotate-right"></i> 다시 하기</button>
+                <button class="modal-btn btn-next" onclick="App.nextStage()"><i class="fa-solid fa-forward"></i> 다음 도장 ➔</button>
+            </div>
+        </div>
+    </div>
+
+    <!-- 게임 오버 / 서바이벌 결과 모달 -->
+    <div id="modalResult" class="game-modal">
+        <div class="modal-card result-card">
+            <div class="modal-badge red">⚡ 60초 서바이벌 완료!</div>
+            <div class="modal-illustration">
+                <div class="result-trophy-icon">🏆</div>
+            </div>
+            <h2 id="resultTitle">전설의 구구단 격파 마스터!</h2>
+            <div class="final-score-display">
+                <span class="lbl">최종 격파 스코어</span>
+                <strong id="finalSurvivalScore">1,250</strong>
+            </div>
+
+            <div class="result-stat-grid">
+                <div class="stat-cell">
+                    <span class="stat-name">격파한 몬스터</span>
+                    <strong id="finalMonsterKills">18마리</strong>
+                </div>
+                <div class="stat-cell">
+                    <span class="stat-name">최대 콤보</span>
+                    <strong id="finalMaxCombo">12회</strong>
+                </div>
+                <div class="stat-cell">
+                    <span class="stat-name">정답률</span>
+                    <strong id="finalAccuracy">95%</strong>
+                </div>
+                <div class="stat-cell">
+                    <span class="stat-name">획득 칭호</span>
+                    <strong id="finalRankTitle" class="highlight">번개 주먹 🐰⚡</strong>
+                </div>
+            </div>
+
+            <div class="modal-actions">
+                <button class="modal-btn btn-map" onclick="App.exitBattle()"><i class="fa-solid fa-map"></i> 도장 맵</button>
+                <button class="modal-btn btn-retry" onclick="App.startSurvivalMode()"><i class="fa-solid fa-rotate-right"></i> 한 판 더!</button>
+                <button class="modal-btn btn-cert" onclick="App.openCertModal()"><i class="fa-solid fa-award"></i> 상장 발급</button>
+            </div>
+        </div>
+    </div>
+
+    <!-- 구구단 격파왕 공인 인증서 (상장) 모달 -->
+    <div id="modalCert" class="game-modal">
+        <div class="modal-card cert-card">
+            <button class="btn-close-cert" onclick="App.closeCertModal()"><i class="fa-solid fa-xmark"></i></button>
+            
+            <div class="cert-interactive-input-row">
+                <label for="certKidName">🌟 아이 이름을 입력하세요:</label>
+                <input type="text" id="certKidName" placeholder="예: 김민준" maxlength="10" oninput="App.updateCertName()">
+            </div>
+
+            <!-- 실제 캡처 가능한 상장 디자인 영역 -->
+            <div class="certificate-paper" id="certificatePaper">
+                <div class="cert-border-corner top-left"></div>
+                <div class="cert-border-corner top-right"></div>
+                <div class="cert-border-corner bottom-left"></div>
+                <div class="cert-border-corner bottom-right"></div>
+
+                <div class="cert-header">
+                    <span class="cert-no">제 2026-GUGU-<span id="certRandomNo">777</span>호</span>
+                    <h1 class="cert-main-title">구구단 격파왕 공인 인증서</h1>
+                    <div class="cert-gold-medal">🏅</div>
+                </div>
+
+                <div class="cert-body">
+                    <div class="cert-recipient">
+                        성 명 : <strong id="certDisplayName" class="underline-name">김민준</strong> 어린이
+                    </div>
+                    <p class="cert-statement">
+                        위 어린이는 2단부터 9단까지의 구구단 몬스터들을<br>
+                        탁월한 계산력과 끈기 있는 펀치로 통쾌하게 격파하여<br>
+                        대한민국 대표 <strong>[구구단 격파왕]</strong> 자격을<br>
+                        당당히 획득하였으므로 이 증서를 수여합니다.
+                    </p>
+                    <div class="cert-date" id="certDateDisplay">2026년 9월 18일</div>
+                </div>
+
+                <div class="cert-footer">
+                    <div class="cert-mascot-seal">
+                        <img src="mascot_hero.jpg?v=7.0" alt="모찌 토토 공식 인증" class="cert-toto-seal">
+                        <span class="cert-seal-caption">🐰 토토 격파 인증</span>
+                    </div>
+                    <div class="cert-seal-box">
+                        <div class="cert-org">초등 실전 에듀테크 @cheer.papa</div>
+                        <div class="cert-leader">대부호 마케팅실장 직인</div>
+                        <div class="red-stamp">대부호<br>인증</div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="cert-modal-buttons">
+                <button class="modal-btn btn-print" onclick="window.print()"><i class="fa-solid fa-print"></i> 상장 인쇄하기</button>
+                <button class="modal-btn btn-share" onclick="App.shareCert()"><i class="fa-solid fa-share-nodes"></i> 자랑하기 링크 복사</button>
+            </div>
+        </div>
+    </div>
+
+    <!-- 메인 로직 스크립트 -->
+    <script src="app.js?v=12.0"></script>
+</body>
+</html>

@@ -1,0 +1,21 @@
+{
+  "name": "초등 구구단 격파왕 | 모찌 토토의 팡팡 배틀",
+  "short_name": "구구단격파왕",
+  "description": "귀염둥이 모찌 토토와 함께 2단부터 9단 보스 몬스터를 신나게 무찌르며 완벽 정복하는 초등 구구단 액션 모험!",
+  "start_url": "./index.html",
+  "display": "standalone",
+  "background_color": "#fdf2f8",
+  "theme_color": "#f472b6",
+  "icons": [
+    {
+      "src": "mascot_hero.jpg",
+      "sizes": "192x192",
+      "type": "image/jpeg"
+    },
+    {
+      "src": "mascot_hero.jpg",
+      "sizes": "512x512",
+      "type": "image/jpeg"
+    }
+  ]
+}
